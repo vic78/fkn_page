@@ -1,0 +1,20 @@
+
+.screen {
+    height: 480px;
+    width: 640px;
+    font-family: Courier;
+    font-size: 16pt;
+    color: white;
+    background-color: black;
+    overflow: auto;
+}
+
+
+.screen div span[contenteditable=true] {
+    padding: 0 2px 0 2px;
+}
+
+.screen div span[contenteditable=true]:empty {
+    border-right: 1px white;
+}
+
