@@ -40,7 +40,6 @@ export class Terminal
         });
 
         this.addLine(lines[0]);
-        console.log(lines);
 
         for (let i = 1; i < lines.length; i++) {
             this.addLine(lines[i], true);
