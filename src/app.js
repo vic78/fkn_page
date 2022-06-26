@@ -14,72 +14,81 @@ function setCaret(event)
         let sel = window.getSelection();
 
         if (elem.childNodes.length === 0) {
-            elem.appendChild(document.createTextNode(''))
+            elem.appendChild(document.createTextNode(''));
         }
         let offset = elem.childNodes[0].length;
         if (sel.anchorOffset === offset || offset === 0) {
 
-        range.setStart(elem.childNodes[0], offset)
+        range.setStart(elem.childNodes[0], offset);
 
-            range.collapse(true)
-            sel.removeAllRanges()
-            sel.addRange(range)
+            range.collapse(true);
+            sel.removeAllRanges();
+            sel.addRange(range);
         }
     }
 }
 
-let screen = document.querySelector('.screen');
-screen.addEventListener('click', setCaret);
+document.addEventListener('DOMContentLoaded', () => {
 
-let terminal = new Terminal();
+    let dialog = document.createElement('dialog');
+    let screen = document.createElement('div');
+    screen.classList.add('screen');
+    let closeButton = document.createElement('button');
+    closeButton.id = 'close';
+    closeButton.textContent = 'Закрыть';
+    dialog.appendChild(screen);
+    dialog.appendChild(closeButton);
 
-const config =  {
-    outputStream: terminal,
-    listingOutput: new StringOutput(),
-    ouputNewLineSymbol: '\n',
-    input: terminal,
-};
+    let body = document.querySelector('body');
+    body.appendChild(dialog);
 
+    screen.addEventListener('click', setCaret);
 
-let elementList = document.querySelectorAll('div.delphi div.toolbar span a.command_help');
+    let terminal = new Terminal();
 
+    const config =  {
+        outputStream: terminal,
+        listingOutput: new StringOutput(),
+        ouputNewLineSymbol: '\n',
+        input: terminal,
+    };
 
-let dialog = document.querySelector('dialog');
-document.querySelector('#close').onclick = function() {
-    dialog.close();
-};
+    let elementList = document.querySelectorAll('div.delphi div.toolbar span a.command_help');
 
+    document.querySelector('#close').onclick = function() {
+        dialog.close();
+    };
 
-elementList.forEach((elem) => {
-    elem.addEventListener( 'click' , async function(event) {
-        dialog.show();
+    elementList.forEach((elem) => {
+        elem.addEventListener( 'click' , async function(event) {
+            dialog.show();
 
-        let divDelphi = this.parentNode.parentNode.parentNode;
-        let container = divDelphi.querySelector('table tbody tr td.code div.container');
-        let programLines = container.querySelectorAll('div.line');
-        let items = [];
-        for (let i = 0; i < programLines.length; i++) {
-            let programLine = programLines[i];
-            let elems = [ ...programLine.childNodes ];
-            for (let j = 0; j < elems.length; j++) {
-                let elem = elems[j];
-                items.push(elem.tagName && elem.tagName === 'BR' ? '\n' : elems[j].textContent);
+            let divDelphi = this.parentNode.parentNode.parentNode;
+            let container = divDelphi.querySelector('table tbody tr td.code div.container');
+            let programLines = container.querySelectorAll('div.line');
+            let items = [];
+            for (let i = 0; i < programLines.length; i++) {
+                let programLine = programLines[i];
+                let elems = [ ...programLine.childNodes ];
+                for (let j = 0; j < elems.length; j++) {
+                    let elem = elems[j];
+                    items.push(elem.tagName && elem.tagName === 'BR' ? '\n' : elems[j].textContent);
+                }
+                items.push('\n');
             }
-            items.push('\n');
-        }
-        let programText = items.join('');
+            let programText = items.join('');
 
 
-        let pascal = new BrowserPascalJs(config);
-        try {
-            await pascal.runString(programText);
-        }  catch (e) {
+            let pascal = new BrowserPascalJs(config);
+            try {
+                await pascal.runString(programText);
+            }  catch (e) {
 
-        }
-        console.log(config.outputStream.value);
-        config.outputStream.value = '';
+            }
+            console.log(config.outputStream.value);
+            config.outputStream.value = '';
 
-        event.preventDefault();
+            event.preventDefault();
+        });
     });
 });
-

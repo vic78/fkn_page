@@ -53,11 +53,13 @@ export class Terminal
         lineContainer.contentEditable = 'true';
         currentLine.appendChild(lineContainer);
         let screen = document.querySelector('.screen');
+        let self = this;
 
         let keyDownListener = function(event) {
             if (event.key === 'Enter') {
                 let editableSpan = this.querySelector('span[contenteditable=true');
                 editableSpan.contentEditable = 'false';
+                self.addLine('', true);
                 event.preventDefault();
                 screen.removeEventListener('click', keyDownListener);
             }
