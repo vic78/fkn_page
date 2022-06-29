@@ -53,18 +53,28 @@ document.addEventListener('DOMContentLoaded', () => {
         input: terminal,
     };
 
-    let elementList = document.querySelectorAll('div.delphi div.toolbar span a.command_help');
+    let elementList = document.querySelectorAll('div.delphi');
 
     document.querySelector('#close').onclick = function() {
         dialog.close();
     };
 
     elementList.forEach((elem) => {
-        elem.addEventListener( 'click' , async function(event) {
+
+        let text_elem = elem.querySelector('div.toolbar span a.command_help');
+
+        let elemToClick = document.createElement('div');
+        elemToClick.classList.add('run_button');
+        elemToClick.textContent = '▶';
+
+        let parentElem = elem.parentNode;
+
+        parentElem.prepend(elemToClick);
+
+        elemToClick.addEventListener( 'click' , async function(event) {
             dialog.show();
 
-            let divDelphi = this.parentNode.parentNode.parentNode;
-            let container = divDelphi.querySelector('table tbody tr td.code div.container');
+            let container = parentElem.querySelector('table tbody tr td.code div.container');
             let programLines = container.querySelectorAll('div.line');
             let items = [];
             for (let i = 0; i < programLines.length; i++) {
@@ -85,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }  catch (e) {
 
             }
-            console.log(config.outputStream.value);
+
             config.outputStream.value = '';
 
             event.preventDefault();

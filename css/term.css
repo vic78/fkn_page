@@ -18,3 +18,19 @@
     border-right: 1px white;
 }
 
+div.run_button {
+    border: 1px solid darkgrey;
+    background-color: gainsboro;
+    color: darkslategray;
+    width: 15pt;
+    height: 15pt;
+    text-align: center;
+    vertical-align: middle;
+    cursor:pointer;
+    box-shadow:  1px 1px 0 #fff, inset 0 1px 1px rgba(0, 0, 0, 0.3);
+    padding-bottom: 4px;
+    padding-left: 2px;
+}
+div.run_button:hover {
+    background-color: darkgray;
+}
