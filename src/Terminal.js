@@ -58,10 +58,12 @@ export class Terminal
         let keyDownListener = function(event) {
             if (event.key === 'Enter') {
                 let editableSpan = this.querySelector('span[contenteditable=true');
-                editableSpan.contentEditable = 'false';
-                self.addLine('', true);
-                event.preventDefault();
-                screen.removeEventListener('click', keyDownListener);
+                if (editableSpan) {
+                    editableSpan.contentEditable = 'false';
+                    self.addLine('', true);
+                    event.preventDefault();
+                    screen.removeEventListener('click', keyDownListener);
+                }
             }
         };
 
@@ -78,15 +80,12 @@ export class Terminal
         screen.addEventListener('keydown', keyDownListener);
 
         return inputPromise;
-//        let result = await inputPromise;
-//        console.log('input', result);
     }
 
     async getChar()
     {
         if (this.letters.length === 0 || this.lettersCounter >= this.letters.length) {
             let word = await this.read() + '\n';
-            console.log('word', word);
             this.letters = word.split('');
 
             this.lettersCounter = 0;
@@ -96,11 +95,5 @@ export class Terminal
         this.lettersCounter++;
 
         return currentChar;
-//        return new Promise(
-//            function(resolve, reject) {
-//                resolve(currentChar);
-//            }
-//        );
-
     }
 }
