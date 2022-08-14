@@ -29,15 +29,13 @@ export class Terminal
         let currentLine = this.getLine(nextLine);
         let lineContainer = document.createElement('span');
 
-        lineContainer.textContent = text;
+        lineContainer.textContent = text.replace(/ /g, '\u00a0');
         currentLine.appendChild(lineContainer);
     }
 
     write(text)
     {
-        let lines = text.split('\n').map(function(elem) {
-            return elem.replace(/ /g, '\u00a0');
-        });
+        let lines = text.split('\n');
 
         this.addLine(lines[0]);
 
