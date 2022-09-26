@@ -51,6 +51,7 @@ export class Terminal
         lineContainer.contentEditable = 'true';
         currentLine.appendChild(lineContainer);
         let screen = document.querySelector('.screen');
+        screen.click();
         let self = this;
 
         let keyDownListener = function(event) {
