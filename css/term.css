@@ -2,7 +2,7 @@
 .screen {
     height: 480px;
     width: 640px;
-    font-family: Courier;
+    font-family: monospace;
     font-size: 12pt;
     color: white;
     background-color: black;
