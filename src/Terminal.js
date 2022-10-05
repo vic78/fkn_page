@@ -31,6 +31,7 @@ export class Terminal
 
         lineContainer.textContent = text.replace(/ /g, '\u00a0');
         currentLine.appendChild(lineContainer);
+        lineContainer.scrollIntoView();
     }
 
     write(text)
@@ -50,6 +51,7 @@ export class Terminal
         let lineContainer = document.createElement('span');
         lineContainer.contentEditable = 'true';
         currentLine.appendChild(lineContainer);
+        lineContainer.scrollIntoView();
         let screen = document.querySelector('.screen');
         screen.click();
         let self = this;
