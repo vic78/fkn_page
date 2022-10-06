@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
         parentElem.prepend(elemToClick);
 
         elemToClick.addEventListener( 'click' , async function(event) {
-            dialog.show();
+            dialog.showModal();
 
             let container = parentElem.querySelector('table tbody tr td.code div.container');
             let programLines = container.querySelectorAll('div.line');
