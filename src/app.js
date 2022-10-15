@@ -57,6 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.querySelector('#close').onclick = function() {
         dialog.close();
+        config.listingOutput.clearLines();
+        screen.replaceChildren();
     };
 
     elementList.forEach((elem) => {
