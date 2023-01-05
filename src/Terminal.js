@@ -72,7 +72,7 @@ export class Terminal
             function(resolve, reject) {
                 setInterval(() => {
                     if (lineContainer.contentEditable === 'false') {
-                        resolve(lineContainer.textContent);
+                        resolve(lineContainer.textContent.replace(/\s/g, '\u0020'));
                     }
                 }, 300);
             }

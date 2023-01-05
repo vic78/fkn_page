@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 let elems = [ ...programLine.childNodes ];
                 for (let j = 0; j < elems.length; j++) {
                     let elem = elems[j];
-                    items.push(elem.tagName && elem.tagName === 'BR' ? '\n' : elems[j].textContent);
+                    items.push(elem.tagName && elem.tagName === 'BR' ? '\n' : elems[j].textContent.replace(/\s/g, '\u0020'));
                 }
                 items.push('\n');
             }
